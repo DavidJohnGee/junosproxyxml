@@ -1,0 +1,76 @@
+module showcpu {
+  yang-version 1;
+
+  namespace "http://juniper.net/yang/software";
+
+  prefix "route";
+
+  import drend {
+    prefix dr;
+  }
+
+  grouping routing-engine-grouping {
+
+    list route-engine {
+      dr:source "route-engine";
+      key "slot";
+      leaf slot {
+        type uint16;
+        dr:source slot;
+      }
+      leaf status {
+        type string;
+        dr:source status;
+      }
+      leaf user1min {
+        type uint16;
+        dr:source cpu-user1;
+      }
+      leaf background1min {
+        type uint16;
+        dr:source cpu-background1;
+      }
+      leaf system1min {
+        type uint16;
+        dr:source cpu-system1;
+      }
+      leaf interrupt1min {
+        type uint16;
+        dr:source cpu-interrupt1;
+      }
+      leaf idle1min {
+        type uint16;
+        dr:source cpu-idle1;
+      }
+      leaf loadavg1 {
+        type string;
+        dr:source load-average-one;
+      }
+      leaf loadavg5 {
+        type string;
+        dr:source load-average-five;
+      }
+      leaf loadavg15 {
+        type string;
+        dr:source load-average-fifteen;
+      }
+    }
+  }
+
+
+  dr:command-app "xmlproxyd";
+  rpc juniper-netconf-get {
+    dr:command-top-of-output "/junos";
+    dr:command-full-name "drend juniper-netconf-get";
+    dr:cli-command "show chassis routing-engine";
+    dr:command-help "default <get> rpc";
+    output {
+      container junos {
+        container route-engine-information {
+          dr:source "/route-engine-information";
+          uses routing-engine-grouping;
+        }
+      }
+    }
+  }
+}

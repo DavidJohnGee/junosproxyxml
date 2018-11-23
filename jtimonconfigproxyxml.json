@@ -1,0 +1,15 @@
+{
+        "host": "192.168.30.15",
+        "port": 50051,
+        "user": "root",
+        "password": "Passw0rd",
+        "cid": "42",
+        "grpc": {
+            "ws": 524288
+        },
+        "paths": [{
+                "path": "/junos/route-engine-information/",
+                "freq": 1000,
+                "mode": "sample"
+        }]
+}
